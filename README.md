@@ -8,7 +8,7 @@ RSS酱 运行在github action上的rss自动更新通知项目
 - 支持多种推送通知
 - 支持Github Action
 - 过滤重复消息
-- ~~精准定时(云函数实现)待实现~~
+- 精准定时(云函数实现)
 
 # 目录文件
 - main.py        主程序
@@ -24,3 +24,35 @@ RSS酱 运行在github action上的rss自动更新通知项目
     - 其他push token变量名请看notify.py下的push_config名字
 3. 添加订阅至 rss_sub
 4. 在action里启动或者 右上角 Star 启动并查看log
+
+# 云函数实现精准定时
+1. 创建 Github token，前往 https://github.com/settings/tokens/new
+- Note： rss （可选）
+- Expiration： No expiration  有效期不会过期
+- Select scopes 勾选 workflow
+- Generate token 创建token 请保存备用
+2. 前往https://console.cloud.tencent.com/scf 登陆并新建函数新建 - 从头开始
+- 函数类型：事件函数
+- 函数名称：github-rss （随意）
+- 地域：广州 （随意）
+- 运行环境： Custom Runtime
+- 函数代码 -> 在线编辑
+- 执行方法：index.main_handler
+
+```shell
+function main_handler () {
+    curl \
+    -X POST \
+    -H "Accept: application/vnd.github.v3+json" \
+    -H "Authorization: token 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" \
+    https://api.github.com/repos/n0raml/rsschan/actions/workflows/main.yaml/dispatches \
+    -d '{"ref":"main"}'
+}
+```
+
+- 在线编辑代码，请修改信息
+- 高级配置 - 环境配置 占用不多，修改内存提升免费额度
+- 内存 64MB
+- 超时时间 900秒
+- 并发配置 64 配置内存
+3. 创建完毕测试并查看日记 查看action是否有触发
