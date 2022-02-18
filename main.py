@@ -11,7 +11,7 @@ def delhtml(t):
     if len(nohtml) > 256:
         return '\n文章过长请查看原文'
     else:
-        return nohtml
+        return '\n'+nohtml
 
 #获取最新内容
 def GetNewRSS(url):
