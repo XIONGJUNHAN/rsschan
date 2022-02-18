@@ -20,6 +20,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install feedparser
+        pip install requests
 
     - name: Update rss
       env:
