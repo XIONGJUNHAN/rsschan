@@ -66,7 +66,7 @@ push_config = {
     'QMSG_KEY': '',                     # qmsg 酱的 QMSG_KEY
     'QMSG_TYPE': '',                    # qmsg 酱的 QMSG_TYPE
 
-    'QYWX_AM': 'ww06ae8a2026ba114e,gPMiRdsxYsBNJmgtevZSCHybPwZ4Oj5qC75xLshgIyw,@all,1000003',# 企业微信应用 格式：企业id,应用密钥,用户全部人就填@all,应用id,企业微信的图片素材可选
+    'QYWX_AM': '',# 企业微信应用 格式：企业id,应用密钥,用户全部人就填@all,应用id,企业微信的图片素材可选
 
     'QYWX_KEY': '',                     # 企业微信机器人
 
