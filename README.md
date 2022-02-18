@@ -25,7 +25,7 @@ RSS酱 运行在github action上的rss自动更新通知项目
 3. 添加订阅至 rss_sub
 4. 在action里启动或者 右上角 Star 启动并查看log
 
-# 云函数实现精准定时
+# 云函数实现精准定时 //需要公开库才会有权限
 1. 创建 Github token，前往 https://github.com/settings/tokens/new
 - Note： rss （可选）
 - Expiration： No expiration  有效期不会过期
@@ -48,6 +48,8 @@ function main_handler () {
     https://api.github.com/repos/n0raml/rsschan/actions/workflows/main.yaml/dispatches \
     -d '{"ref":"main"}'
 }
+#Authorization: token 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     替换token 后面的 token留着
+#https://api.github.com/repos/用户名/rsschan/actions/workflows/main.yaml/dispatches
 ```
 
 - 在线编辑代码，请修改信息
@@ -56,3 +58,9 @@ function main_handler () {
 - 超时时间 900秒
 - 并发配置 64 配置内存
 3. 创建完毕测试并查看日记 查看action是否有触发
+4. 创建定时 找到刚刚的函数进入，触发管理
+- 触发方式： 定时触发
+- 触发周期： 自定义触发周期
+- Cron表达式：*/3 * * * *          秒（可选）分 时 天 月 周
+- 立即启用
+5. 检查是否有触发日记 完美
