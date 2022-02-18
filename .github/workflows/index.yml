@@ -1,0 +1,62 @@
+name: StartSub
+
+on:
+  watch:
+    types: [started]
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        pip install feedparser
+
+    - name: Update rss
+      env:
+        BARK_PUSH: ${{ secrets.BARK_PUSH }}
+        BARK_ARCHIVE: ${{ secrets.BARK_ARCHIVE }}
+        BARK_GROUP: ${{ secrets.BARK_GROUP }}
+        BARK_SOUND: ${{ secrets.BARK_SOUND }}
+        BARK_ICON: ${{ secrets.BARK_ICON }}
+        DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+        DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+        FSKEY: ${{ secrets.FSKEY }}
+        GOBOT_URL: ${{ secrets.GOBOT_URL }}
+        GOBOT_QQ: ${{ secrets.GOBOT_QQ }}
+        GOBOT_TOKEN: ${{ secrets.GOBOT_TOKEN }}
+        GOTIFY_URL: ${{ secrets.GOTIFY_URL }}
+        GOTIFY_TOKEN: ${{ secrets.GOTIFY_TOKEN }}
+        GOTIFY_PRIORITY: ${{ secrets.GOTIFY_PRIORITY }}
+        IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
+        PUSH_KEY: ${{ secrets.PUSH_KEY }}
+        PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+        PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER }}
+        QMSG_KEY: ${{ secrets.QMSG_KEY }}
+        QMSG_TYPE: ${{ secrets.QMSG_TYPE }}
+        QYWX_AM: ${{ secrets.QYWX_AM }}
+        QYWX_KEY: ${{ secrets.QYWX_KEY }}
+        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        TG_USER_ID: ${{ secrets.TG_USER_ID }}
+        TG_API_HOST: ${{ secrets.TG_API_HOST }}
+        TG_PROXY_AUTH: ${{ secrets.TG_PROXY_AUTH }}
+        TG_PROXY_HOST: ${{ secrets.TG_PROXY_HOST }}
+        TG_PROXY_PORT: ${{ secrets.TG_PROXY_PORT }}
+      run: python main.py
+
+    - name: Upload to this repo
+      run: |
+        git config --global user.name ${{ secrets.USERNAME }}
+        git config --global user.email ${{ secrets.USEREMAIL }}
+        git add oldrss
+        git commit -m 'upload oldrss'
+        git push -u origin main
